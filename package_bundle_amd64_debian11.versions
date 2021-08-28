@@ -1,0 +1,15 @@
+{
+    "base-files": "11.1",
+    "ca-certificates": "20210119",
+    "libc6": "2.31-13",
+    "libgcc-s1": "10.2.1-6",
+    "libgomp1": "10.2.1-6",
+    "libgssapi-krb5-2": "1.18.3-6",
+    "libicu67": "67.1-7",
+    "libssl1.1": "1.1.1k-1+deb11u1",
+    "libstdc++6": "10.2.1-6",
+    "netbase": "6.3",
+    "openssl": "1.1.1k-1+deb11u1",
+    "tzdata": "2021a-1",
+    "zlib1g": "1:1.2.11.dfsg-2"
+}
