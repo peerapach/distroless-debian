@@ -1,4 +1,4 @@
 bazel-bin
 bazel-out
 bazel-testlogs
-bazel-distroless
+bazel-distroless-debian

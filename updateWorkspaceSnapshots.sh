@@ -41,7 +41,7 @@ cat > checksums.bzl <<EOF
 # - arm needs someone with available hardware to generate:
 #   //experimental/python2.7/ld.so.arm.cache
 
-BASE_ARCHITECTURES = ["amd64", "arm64]
+BASE_ARCHITECTURES = ["amd64", "arm64"]
 ARCHITECTURES = BASE_ARCHITECTURES
 
 VERSIONS = [
