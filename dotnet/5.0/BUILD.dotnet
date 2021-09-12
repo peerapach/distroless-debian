@@ -1,0 +1,22 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+
+pkg_tar(
+    name = "tar",
+    srcs = glob(
+        ["**/*"],
+        exclude = [
+            "LICENSE.txt",
+            "ThirdPartyNotices.txt",
+        ],
+    ),
+    package_dir = "/usr/share/dotnet",
+    strip_prefix = ".",
+)
+
+filegroup(
+    name = 'file',
+    srcs = ["@libgdiplus_debian10_amd64"],
+    visibility = ['//visibility:public']
+)

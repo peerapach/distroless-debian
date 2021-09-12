@@ -167,6 +167,44 @@ load(
             "libicu63",
             "libstdc++6",
             "zlib1g",
+            # "libgdiplus",
+            "libcairo2",
+            "libexif12",
+            "libfontconfig1",
+            "libfreetype6",
+            "libgif7",
+            "libglib2.0-0",
+            "libjpeg62-turbo",
+            "libpng16-16",
+            "libtiff5",
+            "libx11-6",
+            "sensible-utils",
+            "ucf",
+            "fonts-dejavu-core",
+            "fontconfig-config",
+            "libbsd0",
+            "libexpat1",
+            "libpixman-1-0",
+            "libxau6",
+            "libxdmcp6",
+            "libxcb1",
+            "libx11-data",
+            "libxcb-render0",
+            "libxcb-shm0",
+            "libxext6",
+            "libxrender1",
+            "libjbig0",
+            "libwebp6",
+            "libk5crypto3",
+            "libkeyutils1",
+            "libkrb5-3",
+            "libkrb5support0",
+            "libcom-err2",
+
+            #JAVA
+            "libgraphite2-3",
+            "libharfbuzz0b",
+            "libpcre3",
         ] + (["libunwind8"] if arch in BASE_ARCHITECTURES else []),
         sources = [
             "@" + arch + "_debian10_security//file:Packages.json",
@@ -177,19 +215,34 @@ load(
     for arch in ARCHITECTURES
 ]
 
-# For the dotnet 5 image
+# For the dotnet image
+http_file(
+    name = "libgdiplus_debian10_amd64",
+    urls = ["https://download.mono-project.com/repo/debian/pool/main/libg/libgdiplus/libgdiplus_6.0.5-0xamarin1+debian10b1_amd64.deb"],
+    sha256 = "399e0a1779a00188e9e3514706554cccd02a2ee30cb3ceb2e0d39e23a0896964",
+)
+
 http_archive(
     name = "aspnetcore_runtime5_amd64",
-    build_file = "//dotnet/5:BUILD.dotnet",
+    build_file = "//dotnet/5.0:BUILD.dotnet",
     sha256 = "b6cba668bf18981d2274d093a7acaedcd06fbf1929c864650f22f3cf3313481c",
     # strip_prefix = "aspnetcore-runtime-5.0.9-linux-x64/",
     type = "tar.gz",
     urls = ["https://download.visualstudio.microsoft.com/download/pr/19046594-e911-4784-a148-6de3d74d4a7f/d5c1ba792c4266a2d2a8eea41e81a060/aspnetcore-runtime-5.0.9-linux-x64.tar.gz"],
 )
 
+# For the dotnet 5 image
+http_archive(
+    name = "aspnetcore_runtime31_amd64",
+    build_file = "//dotnet/3.1:BUILD.dotnet",
+    sha256 = "0e529bdb5bb3ce686553cd39aae40007e688e734e1415297d94a4301a2fd3388",
+    type = "tar.gz",
+    urls = ["https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.18/dotnet-runtime-3.1.18-linux-x64.tar.gz"],
+)
+
 http_archive(
     name = "aspnetcore_runtime5_arm64",
-    build_file = "//dotnet/5:BUILD.dotnet",
+    build_file = "//dotnet/5.0:BUILD.dotnet",
     sha256 = "f1c8486cf0d751447ef8e152fb17e6d4552f2337799625424f403b00ce75801b",
     type = "tar.gz",
     urls = ["https://download.visualstudio.microsoft.com/download/pr/0e3da9ad-b838-419a-8ad5-caaff159083f/484d306f2778f15519201178961372bc/aspnetcore-runtime-5.0.9-linux-arm64.tar.gz"],
@@ -230,7 +283,7 @@ container_pull(
     name = "base_distroless_amd64_debian10",
     registry = "gcr.io",
     repository = "distroless/base-debian10",
-    tag = "debug"
+    tag = "latest"
 )
 
 container_pull(
@@ -252,4 +305,11 @@ container_pull(
     registry = "gcr.io",
     repository = "distroless/base-debian11",
     tag = "latest-arm64"
+)
+
+container_pull(
+    name = "java_distroless_amd64_debian10",
+    registry = "gcr.io",
+    repository = "distroless/java-debian10",
+    tag = "nonroot"
 )

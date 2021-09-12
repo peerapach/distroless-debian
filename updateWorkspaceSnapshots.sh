@@ -10,6 +10,7 @@ cp package_bundle_amd64_debian11.versions package_bundle_amd64_debian11.versions
 
 YEAR=`date +"%Y"`
 MONTH=`date +"%m"`
+MONTH=8
 
 # Fetch all the latest snapshot versions for the current month
 
@@ -41,7 +42,8 @@ cat > checksums.bzl <<EOF
 # - arm needs someone with available hardware to generate:
 #   //experimental/python2.7/ld.so.arm.cache
 
-BASE_ARCHITECTURES = ["amd64", "arm64"]
+#BASE_ARCHITECTURES = ["amd64", "arm64"]
+BASE_ARCHITECTURES = ["amd64"]
 ARCHITECTURES = BASE_ARCHITECTURES
 
 VERSIONS = [
@@ -87,20 +89,20 @@ bazel clean
 bazel build //package_manager:dpkg_parser.par
 bazel build @package_bundle_amd64_debian10//file:packages.bzl
 bazel build @package_bundle_amd64_debian11//file:packages.bzl
-bazel build @package_bundle_arm64_debian10//file:packages.bzl
-bazel build @package_bundle_arm64_debian11//file:packages.bzl
+# bazel build @package_bundle_arm64_debian10//file:packages.bzl
+# bazel build @package_bundle_arm64_debian11//file:packages.bzl
 
 # Check if any of the version lock files are updated
 
 if diff -w package_bundle_amd64_debian10.versions package_bundle_amd64_debian10.versions~ &&
-	diff -w package_bundle_amd64_debian11.versions package_bundle_amd64_debian11.versions~ &&
-	diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~ &&
-	diff -w package_bundle_arm64_debian11.versions package_bundle_arm64_debian11.versions~ ; then
+	diff -w package_bundle_amd64_debian11.versions package_bundle_arm64_debian11.versions~ &&
+	# diff -w package_bundle_arm64_debian10.versions package_bundle_arm64_debian10.versions~ &&
+	diff -w package_bundle_arm64_debian11.versions package_bundle_amd64_debian11.versions~ ; then
     echo "No changes detected to package_bundle versions."
     mv checksums.bzl~ checksums.bzl
     mv package_bundle_amd64_debian10.versions~ package_bundle_amd64_debian10.versions
-    mv package_bundle_amd64_debian11.versions~ package_bundle_amd64_debian11.versions
-    mv package_bundle_arm64_debian10.versions~ package_bundle_arm64_debian10.versions
+    # mv package_bundle_amd64_debian11.versions~ package_bundle_arm64_debian11.versions
+    # mv package_bundle_arm64_debian10.versions~ package_bundle_arm64_debian10.versions
     mv package_bundle_amd64_debian11.versions~ package_bundle_amd64_debian11.versions
 else
     echo "Changes detected to package_bundle version files. Please update snapshots."
